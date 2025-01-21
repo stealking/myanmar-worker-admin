@@ -19,7 +19,7 @@ const onRequest = async (config: InternalAxiosRequestConfig): Promise<InternalAx
     return config;
 };
 
-const onRequestError = (error: any) => {
+const onRequestError = (error: AxiosError) => {
     return Promise.reject(error);
 };
 

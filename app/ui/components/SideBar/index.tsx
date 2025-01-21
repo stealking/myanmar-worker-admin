@@ -20,9 +20,7 @@ export default function SideNav() {
                 setClicked(i); // Set the corresponding menu as clicked
             }
         });
-    }, [Menus, pathName]);
-
-    const toggleSidebar = () => {};
+    }, [pathName]);
 
     const sidebarClass = `flex flex-col bg-white h-full transition-all duration-300 overflow-hidden h-full shadow-md z-40 p-4 pr-2 ${
         isSidebarCollapsed ? "w-0 md:w-16" : "w-72 md:w-64"

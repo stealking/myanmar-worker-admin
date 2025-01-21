@@ -101,9 +101,8 @@ const DateRangePicker = () => {
                 />
                 <div className={"inline-flex !divide-x !divide-gray-300 border border-gray-400 rounded-md ml-4"}>
                     {Ranges.map(({ value, label }, index) => (
-                        <div>
+                        <div key={value}>
                             <Button
-                                key={value}
                                 className={`${
                                     currentRange === value
                                         ? "!bg-purple-600 !text-white hover:!bg-purple-700"
