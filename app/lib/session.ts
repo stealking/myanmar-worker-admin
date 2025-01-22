@@ -28,7 +28,7 @@ export async function createSession(payload: Session) {
         httpOnly: true,
         secure: true,
         sameSite: "strict",
-        expires: expiredAt,
+        maxAge: 1000 * 60 * 60 * 24 * 7,
         path: "/",
     });
 }
