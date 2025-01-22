@@ -8,7 +8,6 @@ const axiosClient = axios.create({
         "Content-Type": "application/json",
     },
     timeout: 30000,
-    withCredentials: true,
 });
 
 const onRequest = async (config: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> => {
