@@ -107,13 +107,7 @@ const DateRangePicker = () => {
                                     currentRange === value
                                         ? "!bg-purple-600 !text-white hover:!bg-purple-700"
                                         : "bg-transparent"
-                                } hover:bg-blue-50  ${
-                                    index === 0
-                                        ? "!rounded-l-lg" // First button (left rounded corner)
-                                        : index === Ranges.length - 1
-                                        ? "!rounded-r-lg" // Last button (right rounded corner)
-                                        : ""
-                                }`}
+                                } hover:bg-blue-50`}
                                 onClick={() => handleQuickSelect(value)}
                                 variant="text"
                                 color="inherit">

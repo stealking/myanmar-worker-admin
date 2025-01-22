@@ -3,6 +3,7 @@ import { getSession } from "./app/lib/session";
 
 export default async function middleware(req: NextRequest) {
     const session = await getSession();
+    console.log("middleware", session);
 
     const isAuthenticated = !!(session && session.token);
 

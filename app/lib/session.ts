@@ -27,7 +27,7 @@ export async function createSession(payload: Session) {
     (await cookies()).set("session", session, {
         httpOnly: true,
         secure: true,
-        sameSite: "lax",
+        sameSite: "strict",
         expires: expiredAt,
         path: "/",
     });

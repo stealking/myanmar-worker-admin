@@ -7,6 +7,8 @@ const axiosClient = axios.create({
     headers: {
         "Content-Type": "application/json",
     },
+    timeout: 30000,
+    withCredentials: true,
 });
 
 const onRequest = async (config: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> => {
