@@ -26,13 +26,11 @@ export async function createSession(payload: Session) {
 
     (await cookies()).set("session", session, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
         sameSite: "strict",
-        maxAge: 30,
+        expires: expiredAt,
         path: "/",
     });
-
-    // localStorage.setItem("session", session);
 }
 
 export async function getSession() {
