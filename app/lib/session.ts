@@ -17,13 +17,11 @@ const encodedKey = new TextEncoder().encode(sessionKey);
 
 export async function createSession(payload: Session) {
     const expiredAt = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7); // 7 days
-
     const session = await new SignJWT(payload)
         .setProtectedHeader({ alg: "HS256" })
         .setIssuedAt()
         .setExpirationTime(expiredAt)
         .sign(encodedKey);
-
     (await cookies()).set("session", session, {
         httpOnly: true,
         secure: true,
@@ -34,9 +32,9 @@ export async function createSession(payload: Session) {
 }
 
 export async function getSession() {
-    const cookie = (await cookies()).get("session")?.value;
+    const cookieStore = await cookies();
+    const cookie = cookieStore.get("session")?.value;
     if (!cookie) return null;
-
     try {
         const { payload } = await jwtVerify(cookie, encodedKey, {
             algorithms: ["HS256"],

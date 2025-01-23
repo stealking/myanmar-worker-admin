@@ -1,14 +1,15 @@
-"use server";
-
 import { getSession } from "@/app/lib/session";
 import { LogOut } from "lucide-react";
 import Link from "next/link";
 
 export default async function SignInButton() {
     const session = await getSession();
+
+    const isAuthenticated = !!session;
+
     return (
         <div className="flex items-center gap-2 ml-auto">
-            {!session || !session.token ? (
+            {!isAuthenticated ? (
                 <>
                     <Link href="/login">Login</Link>
                 </>

@@ -1,20 +1,53 @@
 "use client";
 
-import { authenticate } from "@/app/lib/actions/auth";
+import { FormState } from "@/app/lib/types";
 import { CircleAlertIcon } from "lucide-react";
-import { useActionState } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function LoginForm() {
-    const [state, formAction, isPending] = useActionState(authenticate, undefined);
+    const [username, setUsername] = useState("system@admin.com");
+    const [password, setPassword] = useState("111111aaa");
+    const [isPending, setIsPending] = useState(false);
+    const [state, setState] = useState<FormState>(undefined);
+    const router = useRouter();
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        try {
+            setIsPending(true);
+            const response = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, password }),
+            });
+
+            if (response.ok) {
+                router.push("/dashboard");
+            } else {
+                const { message } = await response.json();
+                setState({ ...state, message });
+            }
+        } catch (err) {
+            console.error(err);
+            setState({ ...state, message: "An error occurred while logging in" });
+        } finally {
+            setIsPending(false);
+        }
+    };
 
     return (
-        <form className="space-y-4" action={formAction}>
+        <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Username</label>
                 <input
                     type="text"
                     name="username"
-                    defaultValue={"system@admin.com"}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
                     placeholder="john.doe"
                 />
@@ -31,7 +64,8 @@ export default function LoginForm() {
                 <input
                     type="password"
                     name="password"
-                    defaultValue={"111111aaa"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
                     placeholder="••••••••"
                 />

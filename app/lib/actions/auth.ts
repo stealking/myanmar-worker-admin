@@ -3,7 +3,6 @@
 import { FormState, LoginFormSchema } from "@/app/lib/types";
 import axiosClient from "@/app/lib/axiosClient";
 import { redirect } from "next/navigation";
-import { createSession } from "../session";
 
 export const authenticate = async (state: FormState, formData: FormData): Promise<FormState> => {
     const validateFields = LoginFormSchema.safeParse({
@@ -27,13 +26,6 @@ export const authenticate = async (state: FormState, formData: FormData): Promis
         console.log(error);
     }
     if (success) {
-        await createSession({
-            token: response?.data,
-            user: {
-                username: validateFields.data.username,
-            },
-        });
-
         redirect("/dashboard");
     }
 
